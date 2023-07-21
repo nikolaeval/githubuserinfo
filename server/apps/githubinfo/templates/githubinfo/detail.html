@@ -1,0 +1,26 @@
+{% extends 'githubinfo/base.html' %}
+
+{% block content %}
+<div>
+  <h1>Detail of task {{id}}</h1>
+
+  {% if status != 'SUCCESS' %}
+    <div>Request in processing!</div>
+  {% else %}
+    <div>Request complete!</div>
+    {% if is_error %}
+      <div>Error of request: {{ result }} </div>
+    {% else %}
+      {% for row in result %}
+        <div><a href="{{ row.url }}">{{ row.name }}</a> : {{ row.stars }} stars</div>
+      {% endfor %}
+    {% endif %}
+
+  {% endif %}
+  <br/>
+  <a href="{% url 'githubinfo:detail' %}?id={{id}}">Refresh</a>
+  <br/>
+  <a href="{% url 'githubinfo:create' %}?id={{id}}">Create new request</a>
+
+</div>
+{% endblock %}
